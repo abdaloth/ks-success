@@ -46,11 +46,11 @@ def filter_df(json_df, fname=None):
 
 
 if __name__ == '__main__':
-    done_files = glob('processed_data/*.csv')
+    done_files = glob('filtered_data/*.csv')
     done_files = [p.split('\\')[1] for p in done_files]
     for path in tqdm(gzip_list[1:]):
         with gzip.open(path) as gzip_file:
-            fname = f"processed_data/KS_{path.split('_')[2].split('.')[0]}.csv"
+            fname = f"filtered_data/KS_{path.split('_')[2].split('.')[0]}.csv"
             if fname.split('/')[1] in done_files:
                 continue
             try:
