@@ -8,7 +8,7 @@ tqdm.pandas()
 
 gzip_list = glob('original_data/*.gz')
 
-def filter_df(json_df, fname):
+def filter_df(json_df, fname=None):
     df_list = []
 
     t = pd.DataFrame.from_records(json_df['data'])
@@ -38,10 +38,11 @@ def filter_df(json_df, fname):
 
     t = t.drop(columns=['urls', 'profile', 'photo', 'category', 'creator', 'slug', 'location'])
     df_list.append(t)
-    pass
 
-    pd.concat(df_list, sort=False, ignore_index=True).to_csv(fname, index=False)
-    return
+    if(fname):
+        pd.concat(df_list, sort=False, ignore_index=True).to_csv(fname, index=False)
+    else:
+        return df_list
 
 
 if __name__ == '__main__':
