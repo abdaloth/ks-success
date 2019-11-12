@@ -8,7 +8,7 @@ tqdm.pandas()
 
 gzip_list = glob('original_data/*.gz')
 
-def preprocess(json_df, fname):
+def filter_df(json_df, fname):
     df_list = []
 
     t = pd.DataFrame.from_records(json_df['data'])
@@ -52,7 +52,7 @@ for path in tqdm(gzip_list[1:]):
         if fname in done_files:
             continue
         try:
-            preprocess(pd.read_json(gzip_file, orient='records', lines=True), fname)
+            filter_df(pd.read_json(gzip_file, orient='records', lines=True), fname)
             pass
         except:
             with open('errorlog', 'a') as f:
@@ -61,8 +61,3 @@ for path in tqdm(gzip_list[1:]):
     pass
 
 
-
-
-# df = df.drop_duplicates(subset=['id'])
-# df.shape
-# df.isna().sum()
