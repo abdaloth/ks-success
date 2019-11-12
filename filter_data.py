@@ -19,7 +19,7 @@ def filter_df(json_df, fname=None):
             pass
         pass
     
-    t = t.applymap(lambda x: {} if pd.isnull(x) else x)
+    t = t.applymap(lambda x: {} if np.all(pd.isnull(x)) else x)
 
     t['creator_id'] = t['creator'].apply(lambda c: c.get('id', None))
     t['creator_name'] = t['creator'].apply(lambda c: c.get('name', None))
