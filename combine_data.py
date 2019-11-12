@@ -19,7 +19,13 @@ def preprocess(json_df, fname):
             t = pd.DataFrame([d])
             pass
 
-        # t = t.applymap(lambda x: {} if pd.isnull(x) else x)
+        for feature in ['creator', 'profile', 'category', 'location']:
+            if not feature in t.columns:
+                t[feature] = np.nan
+                pass
+            pass
+        
+        t = t.applymap(lambda x: {} if pd.isnull(x) else x)
 
         t['creator_id'] = t['creator'].apply(lambda c: c.get('id', None))
         t['creator_name'] = t['creator'].apply(lambda c: c.get('name', None))
