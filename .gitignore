@@ -1,5 +1,6 @@
 original_data/*
 processed_data/*
+filtered_data/*
 *.pdf
 ignore/*
 .*
