@@ -44,20 +44,21 @@ def filter_df(json_df, fname):
     return
 
 
-done_files = glob('processed_data/*.csv')
-
-for path in tqdm(gzip_list[1:]):
-    with gzip.open(path) as gzip_file:
-        fname = f"processed_data\\KS_{path.split('_')[2].split('.')[0]}.csv"
-        if fname in done_files:
-            continue
-        try:
-            filter_df(pd.read_json(gzip_file, orient='records', lines=True), fname)
-            pass
-        except:
-            with open('errorlog', 'a') as f:
-                f.write(path+'\n')
+if __name__ == '__main__':
+    done_files = glob('processed_data/*.csv')
+    done_files = [p.split('\\')[1] for p in done_files]
+    for path in tqdm(gzip_list[1:]):
+        with gzip.open(path) as gzip_file:
+            fname = f"processed_data/KS_{path.split('_')[2].split('.')[0]}.csv"
+            if fname.split('/')[1] in done_files:
+                continue
+            try:
+                filter_df(pd.read_json(gzip_file, orient='records', lines=True), fname)
                 pass
-    pass
+            except:
+                with open('errorlog', 'a') as f:
+                    f.write(path+'\n')
+                    pass
+        pass
 
 
