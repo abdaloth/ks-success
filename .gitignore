@@ -1,0 +1,6 @@
+original_data/*
+processed_data/*
+*.pdf
+ignore/*
+.*
+!.gitignore
