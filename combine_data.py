@@ -66,8 +66,6 @@ df['launch_month'] = df['launched_at'].apply(lambda t: datetime.fromtimestamp(t)
 df['launch_day'] = df['launched_at'].apply(lambda t: datetime.fromtimestamp(t).strftime('%d'))
 df['launch_wday'] = df['launched_at'].apply(lambda t: datetime.fromtimestamp(t).strftime('%a'))
 
-# consider all non success as failure
-df['state'] = df['state'].apply(lambda s: s if s == 'successful' else 'failed')
 
 # creator variables
 def creator_history(record, state, hist):
@@ -79,6 +77,7 @@ def creator_history(record, state, hist):
         return 1
     return 0
 
+# dictionary that maps each creator to their earliest successful/failed project
 creator_group = df[['creator_id','state', 'launched_at']]\
                     .groupby(['creator_id', 'state']).min()
 creator_dict = creator_group.to_dict('index')
@@ -111,4 +110,12 @@ redundant_cols = ['id',
 
 
 df = df.drop(columns=redundant_cols)
-df.to_csv('processed_data/KSData_1912901.csv', index=False)
+
+# remove outliers
+df = df[~((df.usd_goal >= 10**5) & (df.backers_count < 10))].copy()
+df = df[~(df.usd_goal < 50)].copy()
+
+# consider all non success as failure
+df['state'] = df['state'].apply(lambda s: s if s == 'successful' else 'failed')
+
+df.to_csv('processed_data/KSData_191204.csv', index=False)
