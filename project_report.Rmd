@@ -65,6 +65,10 @@ The timing of when a project's fundraising campaign starts could be an important
 A creator's record could be important to a prospective "Backer", so a boolean value of whether a project creator has had a previously successful/failed project in their history was added as a predictor.
 
 Given the belief in the importance of a project's name, we created a metric to calculate its uniqueness respective to others in its category. This was done by using word embeddings[4]. Word embeddings are a way of representing words in vector-space where words that are semanticaly similar appear closer to each other. The cosine distance between each project's name vector and the average category vector gives us our value.
+The following images show a wordcloud of successful and failed project names respectively:
+
+![successful names](wordclouds/successful_name_cloud.png){#id .class width=50% height=50%}
+![failed names](wordclouds/failed_name_cloud.png){#id .class width=50% height=50%}
 
 # EDA
 ```{r plot_functions}
