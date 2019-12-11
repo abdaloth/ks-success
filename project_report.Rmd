@@ -143,13 +143,13 @@ Due to the imbalanced distribution we decided to group the countries based on lo
 |Great Britain|England, Scotland, Wales, North Ireland|
 
 
-```{r plots}
+```{r plots, fig.width=10, fig.height=4}
 # p1 = grouped_bars(df, c('main_category', 'state'), c('Primary Categories', 'Percentage of Success Rates'), F)
 p2 = grouped_bars(df, c('country_group', 'state'), c('Country Group', 'Percentage of Success Rates'), F) 
 p3 = grouped_bars(df, c('staff_pick', 'state'), c('Featured by Staff', 'Percentage of Success Rates'), F)
 p4 = grouped_bars(df, c('previously_successful', 'state'), c('Creator has Succesfully Funded a Project Before', 'Percentage of Success Rates'), F)
 
-cowplot::plot_grid(p2, cowplot::plot_grid(p3,p4, ncol=2), nrow=2, scale=.93, rel_heights=c(1.3,1))
+cowplot::plot_grid(p2, cowplot::plot_grid(p3,p4, ncol=2), scale=.93, rel_heights=c(1.3,1))
 
 ```
 
@@ -164,7 +164,7 @@ To answer the main research question of what factors affect a project's chances 
 $Logit(\hat\pi_{success}) = \beta_0USD\_goal_{centered}+\beta_1TTL\_days_{centered}+\beta_2Staff\_Pick +$ $\beta_3Previously\_Successful + \beta_4Previously\_Failed + \beta_5USD\_goal_{centered}:TTL\_days_{centered}+\beta_6Name\_Uniqueness+$
 $\sum_{j=2}^{J}\beta_{7j}Main\_Category + \sum_{j=2}^{J}\beta_{8j}Country\_Group +$
 $\sum_{j=2}^{J}\beta_{9j}Launch\_year +\sum_{j=2}^{J}\beta_{10j}Launch\_month +$
-$\sum_{j=2}^{J}\beta_{11j}Launch\_Day +\sum_{j=2}^{J}\beta_{12j}Launch\_WeekDay +$
+$\sum_{j=2}^{J}\beta_{11j}Launch\_Day +\sum_{j=2}^{J}\beta_{12j}Launch\_WeekDay$
 
 
 ```{r model, warning=F}
@@ -196,6 +196,8 @@ From the final model, we can say with reasonable confidence that compared to the
 
 it should be noted that this model has some limitations, The binned residual plot has some abnormalities as mentioned previously. The data is also missing some highly relevant information that would be useful for future work, such as the reward tiers of the project, the promotional video attached to the project and the popularity of creator prior to their project.
 
+All the code used for this project can be found on https://github.com/abdaloth/ks-success
+
 \newpage
 # References
 
@@ -222,94 +224,6 @@ percentage_bars(df,'main_category', c('Primary Categories', 'Percentage of Proje
 percentage_bars(df,'country_group', c('Country Group', 'Percentage of Projects per Group'), T)
 percentage_bars(df,'staff_pick', c('Primary Categories', 'Percentage of Projects that were picked'), T)
 
-# jtools::summ(model, exp = TRUE, digits=3)
+jtools::summ(model, exp = TRUE, digits=3, model.info = FALSE, model.fit = FALSE)
 
 ```
-
-------------------------------------------------------------------------------
-                                   exp(Est.)    2.5%   97.5%    z val.       p
--------------------------------- ----------- ------- ------- --------- -------
-(Intercept)                            2.903   2.393   3.520    10.828   0.000
-main_categorycomics                    1.530   1.451   1.613    15.686   0.000
-main_categorycrafts                    0.557   0.525   0.590   -19.543   0.000
-main_categorydance                     1.605   1.486   1.735    11.967   0.000
-main_categorydesign                    6.374   6.043   6.724    68.014   0.000
-main_categoryfashion                   0.754   0.724   0.786   -13.312   0.000
-main_categoryfilm & video              1.752   1.692   1.813    31.612   0.000
-main_categoryfood                      0.921   0.882   0.962    -3.719   0.000
-main_categorygames                     1.548   1.489   1.610    21.851   0.000
-main_categoryjournalism                0.367   0.340   0.397   -25.660   0.000
-main_categorymusic                     1.420   1.372   1.470    19.999   0.000
-main_categoryphotography               0.757   0.717   0.799   -10.034   0.000
-main_categorypublishing                0.705   0.679   0.731   -18.917   0.000
-main_categorytechnology                0.622   0.597   0.648   -22.890   0.000
-main_categorytheater                   3.862   3.638   4.101    44.149   0.000
-staff_pickTrue                         9.601   9.258   9.957   121.768   0.000
-previously_successful                  6.434   6.220   6.656   107.803   0.000
-as.factor(launch_year)2010             0.919   0.784   1.076    -1.050   0.294
-as.factor(launch_year)2011             0.901   0.773   1.050    -1.333   0.183
-as.factor(launch_year)2012             0.671   0.576   0.781    -5.132   0.000
-as.factor(launch_year)2013             0.769   0.660   0.896    -3.373   0.001
-as.factor(launch_year)2014             0.346   0.297   0.402   -13.711   0.000
-as.factor(launch_year)2015             0.294   0.253   0.343   -15.780   0.000
-as.factor(launch_year)2016             0.350   0.300   0.407   -13.516   0.000
-as.factor(launch_year)2017             0.513   0.440   0.597    -8.582   0.000
-as.factor(launch_year)2018             0.693   0.595   0.808    -4.696   0.000
-as.factor(launch_year)2019             0.899   0.770   1.049    -1.351   0.177
-goal_c                                 1.000   1.000   1.000   -69.200   0.000
-ttld_c                                 0.981   0.980   0.981   -50.827   0.000
-name_uniqueness                        0.327   0.310   0.345   -40.584   0.000
-previously_failed                      0.466   0.448   0.484   -39.131   0.000
-launch_monthAugust                     0.832   0.799   0.866    -9.029   0.000
-launch_monthDecember                   0.813   0.777   0.851    -8.901   0.000
-launch_monthFebruary                   1.005   0.965   1.046     0.224   0.823
-launch_monthJanuary                    0.862   0.827   0.898    -7.078   0.000
-launch_monthJuly                       0.796   0.766   0.828   -11.399   0.000
-launch_monthJune                       0.917   0.882   0.954    -4.274   0.000
-launch_monthMarch                      1.073   1.032   1.116     3.517   0.000
-launch_monthMay                        0.928   0.892   0.965    -3.754   0.000
-launch_monthNovember                   0.904   0.868   0.942    -4.823   0.000
-launch_monthOctober                    0.938   0.900   0.976    -3.123   0.002
-launch_monthSeptember                  0.935   0.897   0.974    -3.253   0.001
-country_groupEurope                    0.660   0.592   0.735    -7.575   0.000
-country_groupGB                        0.854   0.768   0.950    -2.913   0.004
-country_groupNorth_America             0.818   0.738   0.907    -3.798   0.000
-country_groupOceania                   0.720   0.642   0.808    -5.567   0.000
-launch_wdayMon                         1.051   1.021   1.082     3.375   0.001
-launch_wdaySat                         0.985   0.948   1.023    -0.795   0.427
-launch_wdaySun                         1.086   1.044   1.129     4.126   0.000
-launch_wdayThu                         1.071   1.039   1.104     4.458   0.000
-launch_wdayTue                         1.198   1.165   1.233    12.360   0.000
-launch_wdayWed                         1.127   1.094   1.161     7.899   0.000
-as.factor(launch_day)2                 0.831   0.782   0.882    -6.098   0.000
-as.factor(launch_day)3                 0.810   0.763   0.861    -6.803   0.000
-as.factor(launch_day)4                 0.817   0.768   0.868    -6.495   0.000
-as.factor(launch_day)5                 0.782   0.737   0.831    -7.985   0.000
-as.factor(launch_day)6                 0.789   0.743   0.839    -7.642   0.000
-as.factor(launch_day)7                 0.822   0.774   0.873    -6.326   0.000
-as.factor(launch_day)8                 0.790   0.743   0.839    -7.668   0.000
-as.factor(launch_day)9                 0.766   0.721   0.813    -8.702   0.000
-as.factor(launch_day)10                0.831   0.783   0.883    -6.022   0.000
-as.factor(launch_day)11                0.746   0.702   0.793    -9.482   0.000
-as.factor(launch_day)12                0.807   0.760   0.857    -6.949   0.000
-as.factor(launch_day)13                0.796   0.749   0.846    -7.340   0.000
-as.factor(launch_day)14                0.817   0.769   0.868    -6.549   0.000
-as.factor(launch_day)15                0.875   0.824   0.928    -4.402   0.000
-as.factor(launch_day)16                0.810   0.762   0.861    -6.776   0.000
-as.factor(launch_day)17                0.796   0.749   0.846    -7.327   0.000
-as.factor(launch_day)18                0.786   0.740   0.836    -7.696   0.000
-as.factor(launch_day)19                0.820   0.771   0.872    -6.370   0.000
-as.factor(launch_day)20                0.789   0.743   0.839    -7.615   0.000
-as.factor(launch_day)21                0.800   0.753   0.851    -7.138   0.000
-as.factor(launch_day)22                0.774   0.727   0.823    -8.137   0.000
-as.factor(launch_day)23                0.802   0.754   0.854    -6.947   0.000
-as.factor(launch_day)24                0.828   0.778   0.882    -5.909   0.000
-as.factor(launch_day)25                0.784   0.736   0.835    -7.594   0.000
-as.factor(launch_day)26                0.778   0.731   0.828    -7.861   0.000
-as.factor(launch_day)27                0.810   0.761   0.862    -6.632   0.000
-as.factor(launch_day)28                0.788   0.740   0.838    -7.514   0.000
-as.factor(launch_day)29                0.788   0.740   0.840    -7.385   0.000
-as.factor(launch_day)30                0.786   0.738   0.837    -7.533   0.000
-as.factor(launch_day)31                0.837   0.779   0.899    -4.865   0.000
-goal_c:ttld_c                          1.000   1.000   1.000     3.399   0.001
-------------------------------------------------------------------------------
