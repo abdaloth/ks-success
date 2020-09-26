@@ -10,7 +10,7 @@ creator does not receive any of the funding and the project fails.
 This study explores the possible factors that lead to a project’s chances of success and attempts to quantify their effects.
 
 ## Data and Preprocessing
-
+ 
 The data used in this paper has been collected through Kickstarter’s own web API by webrobots.io [2].
 After obtaining the original data, additional preprocessing and filtering of the records is required. 
 The data records include inner JSON objects with information that is not relevant to the research questions, such as webpage properties, photo dimensions, and related URLs.
@@ -50,6 +50,7 @@ To answer the main research question of what factors affect a project's chances 
 ![Model Formula](https://media.discordapp.net/attachments/666704012904628226/759537408294387732/unknown.png)
 
 The model has an AUC of 0.8, an Accuracy of 72% and a Sensitivity of 68%
+
 Checking the VIF of the model shows that there is no collinearity between our predictors. However, inspecting the binned diagnostic plots (Available in the Appendix) we see some anomalies. The residuals are highest around lower probabilities and seem to follow a slight sinusoidal shape. No amount of transformation or binning has fixed. We will proceed to the inference with caution.
 
 
